@@ -28,13 +28,13 @@ describe('UsersController', () => {
           message: `User with ID ${id} removed successfully`,
         } as unknown as User);
       },
-      // update: (id: number, email: string, password: string) => {
-      //   return Promise.resolve({
-      //     id,
-      //     email,
-      //     password,
-      //   } as User);
-      // },
+      update: (id: number, attrs: Partial<User>) => {
+        return Promise.resolve({
+          id,
+          email: attrs.email,
+          password: attrs.password,
+        } as User);
+      },
     };
     fakeAuthService = {
       // signup: () => {},
@@ -90,12 +90,12 @@ describe('UsersController', () => {
     expect(user).toBeDefined();
   });
 
-  // it('updateUser changes email and password', async () => {
-  //   const updatedUser = await controller.updateUser(1, {
-  //     email: 'kings@gmail.com',
-  //     password: 'kings',
-  //   });
-  //   expect(updatedUser.email).toEqual('kings@gmail.com');
-  //   expect(updatedUser.password).toEqual('kings');
-  // });
+  it('updateUser changes email and password', async () => {
+    const updatedUser = await controller.updateUser('1', {
+      email: 'kings@gmail.com',
+      password: 'kings',
+    });
+    expect(updatedUser.email).toEqual('kings@gmail.com');
+    expect(updatedUser.password).toEqual('kings');
+  });
 });
